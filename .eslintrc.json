@@ -1,0 +1,10 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true,
+        "jest/globals": true
+    },
+    "extends": ["@pcrab/eslint-config"],
+    "plugins": ["jest"]
+}
