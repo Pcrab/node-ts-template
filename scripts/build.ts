@@ -7,8 +7,12 @@ import { swc } from "rollup-plugin-swc3";
 
 import pkg from "../package.json";
 
-const deps = Object.keys(pkg.dependencies || {});
-const peers = Object.keys(pkg.peerDependencies || {});
+const deps = Object.keys(
+    (pkg as unknown as { dependencies?: object }).dependencies ?? {},
+);
+const peers = Object.keys(
+    (pkg as unknown as { peerDependencies?: object }).peerDependencies ?? {},
+);
 
 const cjsOut = pkg.main;
 const esmOut = pkg.module;
