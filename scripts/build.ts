@@ -1,9 +1,10 @@
-import { builtinModules } from "module";
+import rimraf from "rimraf";
 
 import type { RollupOutput } from "rollup";
 import { rollup } from "rollup";
 import dts from "rollup-plugin-dts";
 import { swc } from "rollup-plugin-swc3";
+import { builtinModules } from "module";
 
 import pkg from "../package.json";
 
@@ -18,11 +19,13 @@ const cjsOut = pkg.main;
 const esmOut = pkg.module;
 const typeOut = pkg.types;
 
-const input = "src/index.ts";
+const input = "./src/index.ts";
 const external = [...deps, ...peers, ...builtinModules];
 
-const main = async (): Promise<void> => {
-    const build = async (): Promise<[RollupOutput, RollupOutput]> => {
+async function main(): Promise<void> {
+    await rimraf("dist");
+
+    async function build(): Promise<[RollupOutput, RollupOutput]> {
         const bundle = await rollup({
             input,
             external,
@@ -40,9 +43,9 @@ const main = async (): Promise<void> => {
                 interop: "auto",
             }),
         ]);
-    };
+    }
 
-    const createDts = async (): Promise<RollupOutput> => {
+    async function createDts(): Promise<RollupOutput> {
         const bundle = await rollup({
             input,
             external,
@@ -52,10 +55,10 @@ const main = async (): Promise<void> => {
             file: typeOut,
             format: "es",
         });
-    };
+    }
 
     await Promise.all([build(), createDts()]);
-};
+}
 
 main().catch((err) => {
     console.error(err);
