@@ -1,4 +1,4 @@
-import rimraf from "rimraf";
+import { rimraf } from "rimraf";
 
 import type { RollupOutput } from "rollup";
 import { rollup } from "rollup";
