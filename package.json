@@ -46,9 +46,7 @@
     "module": "dist/index.mjs",
     "name": "@pcrab/template",
     "prettier": "@pcrab/prettier-config",
-    "type": "module",
     "scripts": {
-        "tsnode": "node --loader tsx",
         "build": "pnpm run tsnode scripts/build.ts",
         "commit": "git-cz",
         "lint": "eslint \"src/**/*.{ts, tsx}\"",
@@ -56,9 +54,11 @@
         "prepare": "husky install",
         "prepublishOnly": "pnpm build",
         "test": "pnpm run tsnode --test test/*",
+        "test-cov": "c8 --reporter=lcovonly pnpm run test",
         "test-html": "c8 --reporter=lcov pnpm run test",
-        "test-cov": "c8 --reporter=lcovonly pnpm run test"
+        "tsnode": "node --loader tsx"
     },
+    "type": "module",
     "types": "dist/index.d.ts",
     "version": "0.0.0"
 }
