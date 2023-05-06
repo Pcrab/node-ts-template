@@ -12,29 +12,17 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 'latest'
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        id: pnpm-install
-        with:
-          version: 'latest'
-          run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store
-          restore-keys: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+          cache: pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Test
         run: pnpm run test
-        env:
-          CI: true
+  
