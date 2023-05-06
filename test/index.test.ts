@@ -6,6 +6,6 @@ import { template } from "../src";
 describe("Test", () => {
     it("test", () => {
         assert.strictEqual(1, 1);
-        assert.deepStrictEqual(template, {});
+        assert.deepStrictEqual(template, { test: "Hello" });
     });
 });

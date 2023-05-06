@@ -1,6 +1,16 @@
 import { imp } from "./imp";
 
-const template = {};
-console.log(imp);
+interface TestInt {
+    test: string;
+}
 
-export { template };
+const asdf = (): string => {
+    return imp;
+};
+
+const template: TestInt = {
+    test: "Hello",
+};
+
+export { template, asdf };
+export type { TestInt };
